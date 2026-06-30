@@ -1,0 +1,57 @@
+.stage[data-deck-id^="placeholder-blank-"] .deck {
+  --bg: #f4f6f7;
+  background: var(--bg);
+  color: var(--ink);
+}
+
+.placeholder-slide {
+  background:
+    linear-gradient(90deg, rgba(23, 35, 39, 0.045) 1px, transparent 1px),
+    linear-gradient(0deg, rgba(23, 35, 39, 0.045) 1px, transparent 1px),
+    #f4f6f7;
+  background-size: 80px 80px;
+}
+
+.tpl-placeholder {
+  position: absolute;
+  left: 120px;
+  right: 120px;
+  top: 118px;
+  bottom: 118px;
+  display: grid;
+  place-content: center;
+  gap: 24px;
+  border: 2px dashed rgba(23, 35, 39, 0.22);
+  background: rgba(255, 255, 255, 0.42);
+  text-align: center;
+}
+
+.tpl-placeholder p {
+  color: var(--teal);
+  font-size: 18px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.tpl-placeholder h1 {
+  color: var(--ink);
+  font-size: 72px;
+  line-height: 1.04;
+  font-weight: 950;
+}
+
+.tpl-placeholder span {
+  color: var(--muted);
+  font-size: 28px;
+  line-height: 1.32;
+  font-weight: 700;
+}
+
+.tpl-page-mark {
+  position: absolute;
+  right: 58px;
+  bottom: 38px;
+  color: rgba(23, 35, 39, 0.45);
+  font-size: 17px;
+  font-weight: 900;
+}

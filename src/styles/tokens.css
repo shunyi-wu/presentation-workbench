@@ -1,0 +1,48 @@
+:root {
+  --canvas-w: 1600px;
+  --canvas-h: 900px;
+  --safe-x: 80px;
+  --safe-top: 52px;
+  --safe-bottom: 44px;
+
+  --bg: #f4f6f7;
+  --surface: #ffffff;
+  --surface-2: #eef3f4;
+  --surface-3: #e5ecee;
+  --ink: #172327;
+  --muted: #617176;
+  --soft: #415157;
+  --line: #cdd8db;
+  --line-strong: #aebdc2;
+  --code-bg: #172125;
+  --code-bg-2: #11191c;
+  --code-ink: #eff8f6;
+
+  --teal: #0f8f83;
+  --blue: #2f6f9f;
+  --purple: #7357b7;
+  --green: #5d8f35;
+  --amber: #b36b16;
+  --red: #b74848;
+  --slate: #34464d;
+
+  --placeholder-bg: #edf2f3;
+  --placeholder-line: #8ea2a8;
+  --shadow-page: 0 22px 70px rgba(23, 35, 39, 0.18);
+  --shadow-panel: 0 10px 28px rgba(23, 35, 39, 0.08);
+
+  --space-1: 8px;
+  --space-2: 16px;
+  --space-3: 24px;
+  --space-4: 32px;
+  --space-5: 40px;
+  --space-6: 48px;
+  --space-8: 64px;
+
+  --title-size: 50px;
+  --lead-size: 25px;
+  --body-size: 21px;
+  --code-size: 23px;
+  --card-title-size: 25px;
+  --scale: 1;
+}

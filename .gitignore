@@ -1,0 +1,7 @@
+node_modules/
+dist/
+test-results/
+playwright-report/
+decks/*/review/current/
+decks/*/review/checkpoints/
+.DS_Store
