@@ -101,10 +101,24 @@ function renderEntry(slide) {
         <div><span>自动启动</span><b>npm run start:workbench</b></div>
         <div><span>工作台地址</span><b>http://127.0.0.1:5174</b></div>
         <div><span>重新打开</span><b>Cmd+Shift+B</b></div>
+        <pre class="usage-terminal-log">workspace: presentation-workbench
+surface: desktop + presenter
+status: ready on 5174</pre>
       </section>
-      <aside class="usage-note" data-review-box>
+      <aside class="usage-entry-path" data-review-box>
+        <article>
+          <span>01</span>
+          <div><b>打开项目文件夹</b><p>VS Code 读取工作区任务配置。</p></div>
+        </article>
+        <article>
+          <span>02</span>
+          <div><b>自动启动工作台</b><p>本地服务固定使用 5174。</p></div>
+        </article>
+        <article>
+          <span>03</span>
+          <div><b>网页只是预览入口</b><p>关掉页面不会影响项目文件。</p></div>
+        </article>
         <strong>实际使用时不用手动找入口</strong>
-        <p>打开项目文件夹后，VS Code 会根据 .vscode/tasks.json 启动工作台。网页只是预览入口，关掉后不会影响项目文件。</p>
       </aside>
     </main>
   `);
@@ -112,20 +126,21 @@ function renderEntry(slide) {
 
 function renderFolders(slide) {
   const rows = [
-    ['src/', '保存工作台运行逻辑，例如桌面页、导航、标注工具和基础样式。一般做具体 PPT 时不需要先改这里。'],
-    ['decks/', '每个 PPT 一个独立目录。汇报内容、页面样式、截图评估和交付物优先放在对应 deck 下。'],
-    ['scripts/', '保存辅助脚本，例如启动工作台、清理 review、创建 checkpoint 和检查文档。'],
-    ['tests/', '保存自动检查脚本，用来发现页面溢出、生成截图 review，并验证工作台桌面交互。'],
-    ['prompts/', '保存给 Codex 或其他 AI 使用的任务模板，方便复用常见制作、评估和修复流程。'],
-    ['system/', '保存跨 deck 的长期规则、用户偏好和失败模式，不放某一个具体主题的内容。'],
+    ['src/', '保存工作台运行逻辑，例如桌面页、导航、标注工具和基础样式。一般做具体 PPT 时不需要先改这里。', '工作台系统'],
+    ['decks/', '每个 PPT 一个独立目录。汇报内容、页面样式、截图评估和交付物优先放在对应 deck 下。', '主题内容'],
+    ['scripts/', '保存辅助脚本，例如启动工作台、清理 review、创建 checkpoint 和检查文档。', '自动化脚本'],
+    ['tests/', '保存自动检查脚本，用来发现页面溢出、生成截图 review，并验证工作台桌面交互。', '验证入口'],
+    ['prompts/', '保存给 Codex 或其他 AI 使用的任务模板，方便复用常见制作、评估和修复流程。', '任务模板'],
+    ['system/', '保存跨 deck 的长期规则、用户偏好和失败模式，不放某一个具体主题的内容。', '长期规则'],
   ];
   return frame(slide, `
     ${header(slide)}
     <main class="usage-folder-grid" data-review-box>
-      ${rows.map(([name, desc]) => `
+      ${rows.map(([name, desc, role]) => `
         <article>
           <code>${esc(name)}</code>
           <p>${esc(desc)}</p>
+          <span>${esc(role)}</span>
         </article>`).join('')}
     </main>
   `);
@@ -158,27 +173,39 @@ function renderDeck(slide) {
 }
 
 function renderDesktop(slide) {
+  const actions = [
+    ['浏览', '滚轮或横向拖动', '横向查看所有 deck 卡片，适合同时管理多个 PPT。'],
+    ['进入', '点击封面缩略图', '进入对应 deck 的演示文档页。'],
+    ['排序', '长按卡片后拖动', '新的顺序会写入 src/workbenchOrder.json。'],
+    ['清理', 'placeholder-blank-*', '只是占位空白 PPT，理解收纳效果后可以删除。'],
+  ];
   return frame(slide, `
     ${header(slide)}
     <main class="usage-desktop-demo">
       <section class="usage-card-stack" data-review-box>
-        <article><span>01</span><h2>Usage </h2><i>cover</i></article>
-        <article><span>02</span><h2>Blank 01</h2><i>cover</i></article>
-        <article><span>03</span><h2>Blank 02</h2><i>cover</i></article>
+        <article><span>01</span><h2>Usage</h2><p>Guide / workflow</p><i>cover</i></article>
+        <article><span>02</span><h2>Blank 01</h2><p>Placeholder deck</p><i>cover</i></article>
+        <article><span>03</span><h2>Blank 02</h2><p>Placeholder deck</p><i>cover</i></article>
       </section>
-      <aside class="usage-actions" data-review-box>
-        ${list([
-          '滚轮或横向拖动可以浏览所有 deck 卡片，适合同时管理多个 PPT。',
-          '点击卡片右下角的封面缩略图，会进入对应 deck 的演示文档页。',
-          '长按卡片后可以拖动调整顺序，新的顺序会写入 src/workbenchOrder.json。',
-          'placeholder-blank-* 只是占位空白 PPT，用来展示收纳效果；理解后可以删除。',
-        ])}
+      <aside class="usage-actions usage-action-panel" data-review-box>
+        ${actions.map(([verb, trigger, result]) => `
+          <article>
+            <span>${esc(verb)}</span>
+            <div><b>${esc(trigger)}</b><p>${esc(result)}</p></div>
+          </article>`).join('')}
       </aside>
     </main>
   `);
 }
 
 function renderPresentation(slide) {
+  const actions = [
+    ['翻页', '左右方向键 / 底部按钮', '切换上一页或下一页。'],
+    ['返回', '桌面', '回到工作台首页，不需要重新输入地址。'],
+    ['演示', '全屏', '进入或退出全屏演示状态。'],
+    ['标注', '标注 / 键盘 A', '打开画笔、荧光笔、橡皮、撤销和清空当前页。'],
+    ['定位', 'deck + slide 参数', '直接打开某个 deck 的具体页面位置。'],
+  ];
   return frame(slide, `
     ${header(slide)}
     <main class="usage-presenter-grid">
@@ -191,14 +218,12 @@ function renderPresentation(slide) {
           <b>桌面</b><b>←</b><b>1 / 7</b><b>→</b><b>标注</b><b>全屏</b>
         </div>
       </section>
-      <aside class="usage-actions" data-review-box>
-        ${list([
-          '左右方向键或底部上一页/下一页按钮都可以切换页面。',
-          '点击“桌面”会回到工作台首页，不需要重新输入地址。',
-          '点击“全屏”可以进入或退出全屏演示状态。',
-          '点击“标注”或按键盘 A，可以打开画笔、荧光笔、橡皮、撤销和清空当前页。',
-          'URL 中的 deck 和 slide 参数可以直接定位到某个 deck 的某一页，适合分享具体页面位置。',
-        ])}
+      <aside class="usage-actions usage-presenter-actions" data-review-box>
+        ${actions.map(([verb, trigger, result]) => `
+          <article>
+            <span>${esc(verb)}</span>
+            <div><b>${esc(trigger)}</b><p>${esc(result)}</p></div>
+          </article>`).join('')}
       </aside>
     </main>
   `);
@@ -206,21 +231,22 @@ function renderPresentation(slide) {
 
 function renderAi(slide) {
   const steps = [
-    ['选题', '先确定要讲的主题和听众，不急着进入页面制作。'],
-    ['内容方案', '和网页 GPT 交流，得到只涉及汇报内容的设计方案报告。'],
-    ['双窗口评估', '新开窗口评估方案，在“评估 -> 修改 -> 再评估”之间循环，直到蓝图足够好。'],
-    ['Codex 归档', '把最终设计方案交给 VS Code 里的 Codex，让它归档为蓝图并开启计划模式。'],
-    ['样张通过', '先做少量样张确认方向，再继续让 Codex 分批自动制作后续页面。'],
-    ['独立评估', '全部完成后新开窗口写评估方案，确认评估合理后按结果继续修改。'],
+    ['选题', '先确定要讲的主题和听众，不急着进入页面制作。', '目标边界'],
+    ['内容方案', '和网页 GPT 交流，得到只涉及汇报内容的设计方案报告。', '蓝图初稿'],
+    ['双窗口评估', '新开窗口评估方案，在“评估 -> 修改 -> 再评估”之间循环，直到蓝图足够好。', '可制作蓝图'],
+    ['Codex 归档', '把最终设计方案交给 VS Code 里的 Codex，让它归档为蓝图并开启计划模式。', 'deck 计划'],
+    ['样张通过', '先做少量样张确认方向，再继续让 Codex 分批自动制作后续页面。', '批量制作'],
+    ['独立评估', '全部完成后新开窗口写评估方案，确认评估合理后按结果继续修改。', '修复清单'],
   ];
   return frame(slide, `
     ${header(slide)}
     <main class="usage-ai-flow" data-review-box>
-      ${steps.map(([title, body], index) => `
+      ${steps.map(([title, body, output], index) => `
         <article>
           <span>${String(index + 1).padStart(2, '0')}</span>
           <h2>${esc(title)}</h2>
           <p>${esc(body)}</p>
+          <em>${esc(output)}</em>
         </article>`).join('')}
     </main>
     <aside class="usage-boundary" data-review-box>

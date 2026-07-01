@@ -241,6 +241,10 @@ body[data-surface="workbench-gallery"] {
   text-align: center;
 }
 
+.workbench-gallery-cover.is-missing-cover img {
+  display: none;
+}
+
 .workbench-gallery-cover img {
   aspect-ratio: 16 / 9;
   height: auto;
